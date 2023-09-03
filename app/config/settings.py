@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=1))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split(" ")
 
@@ -50,12 +50,8 @@ INSTALLED_APPS = [
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("BACKEND_CORS_ORIGINS", "http://localhost:8000 http://127.0.0.1:8000").split(" ")
 
-CORS_ALLOWED_ORIGINS = os.environ.get("BACKEND_CORS_ORIGINS", "http://localhost:8000 http://127.0.0.1:8000").split(" ")
+CORS_ALLOWED_ORIGINS = os.environ.get("BACKEND_CORS_ORIGINS", "http://localhost:8080 http://127.0.0.1:8080").split(" ")
 
-CORS_ALLOWED_ORIGIN_REGEXES = os.environ.get("BACKEND_CORS_ORIGINS",
-                                             "http://localhost:8000 http://127.0.0.1:8000").split(" ")
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -104,7 +100,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR.parent / "db.sqlite3"),
         "USER": os.environ.get("SQL_USER", "user"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
