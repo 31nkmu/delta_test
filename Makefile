@@ -98,3 +98,8 @@ makemigrations: ## Создание миграций
 .PHONY: run
 run: ## Запуск приложения
 	poetry run python3 app/manage.py runserver
+
+.PHONY: createsuperuser-dev
+createsuperuser-dev: ## Создание суперпользователя
+	poetry run python3 app/manage.py createsuperuser
+
