@@ -183,5 +183,3 @@ CACHES = {
         'LOCATION': BASE_DIR / 'cache/',
     }
 }
-
-AUTH_USER_MODEL = 'account.CustomUser'

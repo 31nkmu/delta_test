@@ -95,3 +95,6 @@ migrate: ## Проведение миграций
 makemigrations: ## Создание миграций
 	poetry run python3 app/manage.py makemigrations
 
+.PHONY: run
+run: ## Запуск приложения
+	poetry run python3 app/manage.py runserver
