@@ -15,7 +15,7 @@ ___
 $ git clone https://github.com/31nkmu/delta_test.git
 # или клонировать через SSH:
 $ git clone git@github.com:31nkmu/delta_test.git
-$ cd notification_service
+$ cd delta_test
 ```
 * Создай виртуальное окружение используя команду
 ```sh
@@ -64,6 +64,7 @@ $ celery -A config beat
 |----------|---------|
 | [Docker](https://docs.docker.com/engine/install/ubuntu/) | Докер |
 | [docker-compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04) | Докер-композ
+
 Создай .env файл (смотри .env.example)
 ```sh
 touch .env
