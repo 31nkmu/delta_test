@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.8-slim
 
 RUN mkdir -p /home/app
 
@@ -8,8 +8,6 @@ RUN mkdir $APP_HOME
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
     POETRY_NO_INTERACTION=1 \
     POETRY_HOME='/usr/local' \
     POETRY_VIRTUALENVS_CREATE=false \

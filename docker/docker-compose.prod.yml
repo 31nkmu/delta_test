@@ -14,7 +14,6 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
       - migration
       - redis
     networks:
@@ -33,13 +32,16 @@ services:
       - network
 
   db:
-    image: postgres:14-alpine
+    image: mysql:8.0
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - mysql_data:/var/lib/mysql
     environment:
-      POSTGRES_USER: ${SQL_USER}
-      POSTGRES_PASSWORD: ${SQL_PASSWORD}
-      POSTGRES_DB: ${SQL_DATABASE}
+      MYSQL_DATABASE: ${SQL_DATABASE}
+      MYSQL_USER: ${SQL_USER}
+      MYSQL_PASSWORD: ${SQL_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    expose:
+      - 3306
     networks:
       - network
     env_file:
@@ -52,7 +54,6 @@ services:
       - ${REDIS_PORT}
     networks:
       - network
-
 
   nginx:
     build: ../nginx
@@ -79,26 +80,11 @@ services:
       - network
 
 
-  flower:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile.prod
-    command: celery -A config.celery:app flower
-    depends_on:
-      - web
-    ports:
-      - ${FLOWER_PORT}:${FLOWER_PORT}
-    env_file:
-      - .env
-    networks:
-      - network
-
-
 networks:
   network:
     driver: bridge
 
 volumes:
-  postgres_data:
+  mysql_data:
   static_volume:
   media_volume:

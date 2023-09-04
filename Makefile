@@ -1,43 +1,8 @@
 .SILENT:
 
-# Запуск докер контейнера в разработке
-
-.PHONY: up
-up: ## Создает и запускает контейнер
-	docker-compose -f docker/docker-compose.yml up -d --build
-
-.PHONY: down
-down: ## Останавливает и удаляет контейнеры
-	docker-compose -f docker/docker-compose.yml down
-
-.PHONY: stop
-stop: ## Останавливает контейнеры
-	docker-compose -f docker/docker-compose.yml stop
-
-.PHONY: start
-start: ## Запускает контейнеры
-	docker-compose -f docker/docker-compose.yml start
-
-.PHONY: down-v
-down-v: ## Останавливает и удаляет контейнеры вместе с зависимостями
-	docker-compose -f docker/docker-compose.yml down -v
-
-.PHONY: logs
-logs: ## Просмотр логов
-	docker-compose -f docker/docker-compose.yml logs -f
-
-.PHONY: ps
-ps: ## Список всех контейнеров
-	docker-compose -f docker/docker-compose.yml ps -a
-
 .PHONY: createsuperuser
 createsuperuser: ## Создание суперпользователя
 	docker-compose -f docker/docker-compose.yml exec web python3 manage.py createsuperuser
-
-.PHONY: exec
-exec:
-	docker-compose -f docker/docker-compose.yml exec web bash
-
 
 
 # Запуск контейнера в проадкшене
