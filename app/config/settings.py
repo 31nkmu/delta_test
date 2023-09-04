@@ -193,3 +193,61 @@ CACHES = {
         }
     }
 }
+
+# Указываем путь к директориям с логами
+LOG_DIR = os.path.join(BASE_DIR.parent, 'logs')
+APP_LOG_DIR = os.path.join(LOG_DIR, 'django_logs')
+TASK_LOG_DIR = os.path.join(LOG_DIR, 'celery_logs')
+
+# Создаем директории, если они не существуют
+os.makedirs(APP_LOG_DIR, exist_ok=True)
+os.makedirs(TASK_LOG_DIR, exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'django_info_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(APP_LOG_DIR, 'info.log'),
+            'formatter': 'verbose',
+        },
+        'django_error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(APP_LOG_DIR, 'error.log'),
+            'formatter': 'verbose',
+        },
+        'celery_info_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(TASK_LOG_DIR, 'info.log'),
+            'formatter': 'verbose',
+        },
+        'celery_error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(TASK_LOG_DIR, 'error.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django_logger': {
+            'handlers': ['django_info_file', 'django_error_file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'celery_logger': {
+            'handlers': ['celery_info_file', 'celery_error_file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
