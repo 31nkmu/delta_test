@@ -22,6 +22,7 @@ def calculate_delivery(weight: float | int,
 def period_update_delivery():
     try:
         rate_obj = RateInterface()
+        # получает посылки, в которых не было рассчитана стоимость посылки
         packages_to_update = Package.objects.filter(delivery__isnull=True).all()
         res_objects = []
         for package_obj in packages_to_update:
@@ -36,9 +37,6 @@ def period_update_delivery():
         Package.objects.bulk_update(
             res_objects,
             ('delivery',)
-            # update_conflicts=True,
-            # update_fields=('delivery',),
-            # unique_fields=('id',),
         )
         logger.info("Периодическая задача по обновлению доставки успешно выполнена.")
     except Exception as e:
